@@ -4,10 +4,14 @@ import Button from "@components/Button";
 import { useMutation } from "@tanstack/react-query";
 import { login } from "@services/api.routes";
 import CustomLink from "@components/CustomLink";
+import { useToast } from "@components/ToastProvider";
+import { useState } from "react";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 interface FormValues {
   email: string;
   password: string;
+  rememberMe: boolean;
 }
 
 export default function LoginForm() {
@@ -17,16 +21,21 @@ export default function LoginForm() {
     formState: { errors },
   } = useForm<FormValues>();
 
+  const { addToast } = useToast();
+
   const { mutateAsync } = useMutation({
     mutationFn: login,
   });
 
+  const [showPassword, setShowPassword] = useState(false);
+
   const onSubmit = async (data: FormValues) => {
     try {
-      const response = await mutateAsync(data);
-      console.log("Login bem-sucedido", response);
-    } catch (error) {
-      console.error("Erro ao fazer login:", error);
+      await mutateAsync(data);
+      addToast("Login bem-sucedido");
+      window.location.href = "/";
+    } catch (error: any) {
+      addToast(error.response?.data?.message, "error");
     }
   };
 
@@ -54,22 +63,46 @@ export default function LoginForm() {
           <p className='text-red-500 text-sm'>{errors.email.message}</p>
         )}
 
-        <input
-          type='password'
-          placeholder='Senha'
-          {...register("password", { required: "Senha obrigatória" })}
-          className='w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
-        />
+        <div className='relative'>
+          <input
+            type={showPassword ? "text" : "password"}
+            placeholder='Senha'
+            {...register("password", { required: "Senha obrigatória" })}
+            className='w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 pr-10'
+          />
+          <span
+            role='button'
+            tabIndex={0}
+            className='absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer transition-colors duration-200 hover:text-blue-600 focus:text-blue-600'
+            onClick={() => setShowPassword((prev) => !prev)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                setShowPassword((prev) => !prev);
+              }
+            }}
+            aria-label={showPassword ? "Ocultar senha" : "Mostrar senha"}
+          >
+            {showPassword ? (
+              <AiOutlineEyeInvisible size={26} />
+            ) : (
+              <AiOutlineEye size={26} />
+            )}
+          </span>
+        </div>
         {errors.password && (
           <p className='text-red-500 text-sm'>{errors.password.message}</p>
         )}
 
         <div className='flex items-center justify-between text-sm'>
-          <label className='flex items-center gap-2'>
-            <input type='checkbox' className='accent-blue-500' />
+          <label className='flex items-center gap-2 cursor-pointer'>
+            <input
+              type='checkbox'
+              className='accent-blue-500 cursor-pointer'
+              {...register("rememberMe")}
+            />
             Lembrar meu dados
           </label>
-          <CustomLink href='/login'> Esqueceu sua senha?</CustomLink>
+          <CustomLink href='/forget-password'> Esqueceu sua senha?</CustomLink>
         </div>
 
         <Button className='w-full bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-md'>
