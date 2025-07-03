@@ -5,6 +5,9 @@ import type { Register } from "react-router-dom";
 export const login = async (loginData: Login) =>
   apiInstance.post(`/auth/login`, loginData).then((res) => res.data);
 
+export const me = async () =>
+  apiInstance.get(`/users/me`).then((res) => res.data);
+
 export const registerUser = async (registerData: Register) =>
   apiInstance.post(`/users`, registerData).then((res) => res.data);
 

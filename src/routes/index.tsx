@@ -2,6 +2,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LoginPage from "@features/auth/pages/LoginPage";
 import SignInPage from "@features/auth/pages/SignInPage";
 import ForgetPasswordPage from "@features/auth/pages/ForgetPasswordPage";
+import RequireAuth from "@components/RequireAuth";
+import DashboardPage from "@pages/DashboardPage";
 
 export default function AppRoutes() {
   return (
@@ -10,6 +12,10 @@ export default function AppRoutes() {
         <Route path='/login' element={<LoginPage />} />
         <Route path='/signin' element={<SignInPage />} />
         <Route path='/forget-password' element={<ForgetPasswordPage />} />
+
+        <Route element={<RequireAuth />}>
+          <Route path='/' element={<DashboardPage />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );
