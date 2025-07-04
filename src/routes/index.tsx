@@ -4,6 +4,7 @@ import SignInPage from "@features/auth/pages/SignInPage";
 import ForgetPasswordPage from "@features/auth/pages/ForgetPasswordPage";
 import RequireAuth from "@components/RequireAuth";
 import DashboardPage from "@pages/DashboardPage";
+import Layout from "@components/Layout";
 
 export default function AppRoutes() {
   return (
@@ -14,7 +15,9 @@ export default function AppRoutes() {
         <Route path='/forget-password' element={<ForgetPasswordPage />} />
 
         <Route element={<RequireAuth />}>
-          <Route path='/' element={<DashboardPage />} />
+          <Route element={<Layout />}>
+            <Route path='/' element={<DashboardPage />} />
+          </Route>
         </Route>
       </Routes>
     </BrowserRouter>
