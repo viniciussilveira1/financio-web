@@ -30,13 +30,15 @@ export default function ForgetPasswordForm() {
   };
 
   return (
-    <div className='w flex items-center justify-center bg-white p-10 rounded-xl shadow-lg'>
+    <div className='w flex items-center justify-center bg-card p-10 rounded-xl shadow-lg border border-secondary-200'>
       <form
         onSubmit={handleSubmit(onSubmit)}
         className='w-full max-w-md space-y-4'
       >
-        <h2 className='text-2xl font-bold text-center'>Esqueceu sua senha?</h2>
-        <p className='text-sm text-gray-500 text-center'>
+        <h2 className='text-2xl font-bold text-center text-app'>
+          Esqueceu sua senha?
+        </h2>
+        <p className='text-sm text-secondary-500 text-center'>
           Informe seu e-mail cadastrado e enviaremos um link para redefinir sua
           senha.
         </p>
@@ -45,17 +47,17 @@ export default function ForgetPasswordForm() {
           type='email'
           placeholder='E-mail'
           {...register("email", { required: "E-mail obrigatório" })}
-          className='w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
+          className='w-full p-3 border border-secondary-200 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary bg-white'
         />
         {errors.email && (
           <p className='text-red-500 text-sm'>{errors.email.message}</p>
         )}
 
-        <Button className='w-full bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-md'>
+        <Button className='w-full bg-primary hover:bg-primary-dark text-white p-3 rounded-md'>
           Enviar link de redefinição
         </Button>
 
-        <p className='text-center text-sm text-gray-600'>
+        <p className='text-center text-sm text-secondary-600'>
           Lembrou sua senha?{" "}
           <CustomLink href='/login'>Voltar para login</CustomLink>
         </p>

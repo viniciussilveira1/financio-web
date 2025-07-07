@@ -5,6 +5,7 @@ import ForgetPasswordPage from "@features/auth/pages/ForgetPasswordPage";
 import RequireAuth from "@components/RequireAuth";
 import DashboardPage from "@pages/DashboardPage";
 import Layout from "@components/Layout";
+import WalletPage from "@pages/wallets/WalletPage";
 
 export default function AppRoutes() {
   return (
@@ -17,6 +18,7 @@ export default function AppRoutes() {
         <Route element={<RequireAuth />}>
           <Route element={<Layout />}>
             <Route path='/' element={<DashboardPage />} />
+            <Route path='/wallets' element={<WalletPage />} />
           </Route>
         </Route>
       </Routes>

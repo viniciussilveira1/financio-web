@@ -5,7 +5,16 @@ export default function OAuthButtons({ className }: { className?: string }) {
     <div>
       <button
         type='button'
-        className={`w-full relative shadow-md flex items-center justify-center gap-2 ${className}`}
+        className={`
+          w-full
+          relative
+          shadow-md
+          flex
+          items-center
+          justify-center
+          gap-2
+          border
+          hover:bg-secondary-100 transition-colors rounded-md py-3 ${className}`}
         onClick={() => {
           window.location.href = `${import.meta.env.VITE_API_URL}${
             import.meta.env.VITE_GOOGLE_API_URL
@@ -16,7 +25,7 @@ export default function OAuthButtons({ className }: { className?: string }) {
           <FcGoogle size={24} />
         </div>
 
-        <span className='font-medium'>Continuar com Google</span>
+        <span className='font-medium text-black'>Continuar com Google</span>
       </button>
     </div>
   );

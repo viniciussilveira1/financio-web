@@ -9,13 +9,15 @@ export default function Button({
     <button
       className={`
         w-full
-        bg-gradient-to-r from-blue-500 to-blue-900
+        bg-gradient-to-r from-primary to-primary-dark
         text-white
         rounded-lg
         shadow-md
         font-semibold
-        hover:from-blue-600 hover:to-blue-800
+        hover:from-primary-dark hover:to-primary
         hover:shadow-lg
+        transition-all
+        duration-200
         ${className}
       `}
     >

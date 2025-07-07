@@ -8,7 +8,10 @@ export default function CustomLink({
   children: React.ReactNode;
 }) {
   return (
-    <Link to={href} className='text-blue-600 hover:underline'>
+    <Link
+      to={href}
+      className='text-primary hover:text-primary-dark hover:underline transition-colors'
+    >
       {children}
     </Link>
   );

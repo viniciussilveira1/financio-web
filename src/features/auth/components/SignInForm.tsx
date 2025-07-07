@@ -35,15 +35,15 @@ export default function SignInForm() {
   };
 
   return (
-    <div className='w flex items-center justify-center bg-white p-10 rounded-xl shadow-lg'>
+    <div className='w flex items-center justify-center bg-card p-10 rounded-xl shadow-lg border border-secondary-200'>
       <form
         onSubmit={handleSubmit(onSubmit)}
         className='w-full max-w-md space-y-4'
       >
-        <h2 className='text-2xl font-bold text-center'>
+        <h2 className='text-2xl font-bold text-center text-app'>
           Crie sua conta no Financio!
         </h2>
-        <p className='text-sm text-gray-500 text-center'>
+        <p className='text-sm text-secondary-500 text-center'>
           Controle suas finanças de forma simples. Cadastre carteiras e registre
           suas movimentações com o Financio.
         </p>
@@ -52,7 +52,7 @@ export default function SignInForm() {
           type='text'
           placeholder='Nome completo'
           {...register("name", { required: "Nome obrigatório" })}
-          className='w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
+          className='w-full p-3 border border-secondary-200 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary bg-white'
         />
         {errors.name && (
           <p className='text-red-500 text-sm'>{errors.name.message}</p>
@@ -62,7 +62,7 @@ export default function SignInForm() {
           type='email'
           placeholder='E-mail'
           {...register("email", { required: "E-mail obrigatório" })}
-          className='w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
+          className='w-full p-3 border border-secondary-200 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary bg-white'
         />
         {errors.email && (
           <p className='text-red-500 text-sm'>{errors.email.message}</p>
@@ -78,14 +78,14 @@ export default function SignInForm() {
               message: "Telefone inválido",
             },
           })}
-          className='w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
+          className='w-full p-3 border border-secondary-200 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary bg-white'
         />
 
         <input
           type='password'
           placeholder='Senha'
           {...register("password", { required: "Senha obrigatória" })}
-          className='w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
+          className='w-full p-3 border border-secondary-200 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary bg-white'
         />
         {errors.password && (
           <p className='text-red-500 text-sm'>{errors.password.message}</p>
@@ -101,7 +101,7 @@ export default function SignInForm() {
               return value === password || "As senhas não coincidem";
             },
           })}
-          className='w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
+          className='w-full p-3 border border-secondary-200 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary bg-white'
         />
         {errors.confirmPassword && (
           <p className='text-red-500 text-sm'>
@@ -113,23 +113,23 @@ export default function SignInForm() {
           <p className='text-red-500 text-sm'>{errors.phone.message}</p>
         )}
 
-        <Button className='w-full bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-md'>
+        <Button className='w-full bg-primary hover:bg-primary-dark text-white p-3 rounded-md'>
           Cadastrar
         </Button>
 
         <div className='flex items-center my-4'>
-          <div className='flex-grow h-px bg-gray-300' />
-          <span className='mx-4 text-sm text-gray-500'>OU</span>
-          <div className='flex-grow h-px bg-gray-300' />
+          <div className='flex-grow h-px bg-secondary-200' />
+          <span className='mx-4 text-sm text-secondary-500'>OU</span>
+          <div className='flex-grow h-px bg-secondary-200' />
         </div>
 
         <OAuthButtons />
 
-        <p className='text-center text-sm text-gray-600'>
+        <p className='text-center text-sm text-secondary-600'>
           Já tem uma conta?{" "}
           <a
             href='#'
-            className='text-blue-600 hover:underline'
+            className='text-primary hover:text-primary-dark hover:underline'
             onClick={(e) => {
               e.preventDefault();
               window.location.href = "/login";

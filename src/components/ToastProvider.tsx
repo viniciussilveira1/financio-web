@@ -28,10 +28,10 @@ interface ToastContextType {
 const ToastContext = createContext<ToastContextType | undefined>(undefined);
 
 const toastIcons: Record<ToastType, JSX.Element> = {
-  success: <AiOutlineCheckCircle className='text-green-500' size={24} />,
+  success: <AiOutlineCheckCircle className='text-primary' size={24} />,
   error: <AiOutlineCloseCircle className='text-red-500' size={24} />,
   warning: <AiOutlineWarning className='text-yellow-500' size={24} />,
-  info: <AiOutlineInfoCircle className='text-blue-500' size={24} />,
+  info: <AiOutlineInfoCircle className='text-primary' size={24} />,
 };
 
 export function ToastProvider({ children }: { children: ReactNode }) {
@@ -59,13 +59,11 @@ export function ToastProvider({ children }: { children: ReactNode }) {
               transition={{ type: "spring", stiffness: 400, damping: 30 }}
               className={`flex items-center gap-3 min-w-[260px] max-w-xs px-5 py-3 rounded-lg shadow-lg border-l-4 ${getToastStyles(
                 type
-              )} bg-white`}
+              )} bg-card border border-secondary-200`}
               style={{ boxShadow: "0 4px 24px 0 rgba(0,0,0,0.10)" }}
             >
               <span>{toastIcons[type]}</span>
-              <span className='flex-1 text-gray-800 font-medium'>
-                {message}
-              </span>
+              <span className='flex-1 text-app font-medium'>{message}</span>
             </motion.div>
           ))}
         </AnimatePresence>
@@ -89,8 +87,8 @@ const getToastStyles = (type: ToastType) => {
     case "warning":
       return "border-yellow-400";
     case "info":
-      return "border-blue-400";
+      return "border-primary";
     default:
-      return "border-green-500";
+      return "border-primary";
   }
 };

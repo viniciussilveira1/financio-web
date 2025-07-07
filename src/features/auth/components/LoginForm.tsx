@@ -40,15 +40,15 @@ export default function LoginForm() {
   };
 
   return (
-    <div className='w flex items-center justify-center bg-white p-10 rounded-xl shadow-lg'>
+    <div className='w flex items-center justify-center bg-card p-10 rounded-xl shadow-lg border border-secondary-200'>
       <form
         onSubmit={handleSubmit(onSubmit)}
         className='w-full max-w-md space-y-4'
       >
-        <h2 className='text-2xl font-bold text-center'>
+        <h2 className='text-2xl font-bold text-center text-app'>
           Bem-vindo de volta ao Financio!
         </h2>
-        <p className='text-sm text-gray-500 text-center'>
+        <p className='text-sm text-secondary-500 text-center'>
           Controle suas finanças de forma simples. Cadastre carteiras e registre
           suas movimentações com o Financio.
         </p>
@@ -57,7 +57,7 @@ export default function LoginForm() {
           type='email'
           placeholder='E-mail'
           {...register("email", { required: "E-mail obrigatório" })}
-          className='w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
+          className='w-full p-3 border border-secondary-200 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary bg-white'
         />
         {errors.email && (
           <p className='text-red-500 text-sm'>{errors.email.message}</p>
@@ -68,12 +68,12 @@ export default function LoginForm() {
             type={showPassword ? "text" : "password"}
             placeholder='Senha'
             {...register("password", { required: "Senha obrigatória" })}
-            className='w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 pr-10'
+            className='w-full p-3 border border-secondary-200 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary pr-10 bg-white'
           />
           <span
             role='button'
             tabIndex={0}
-            className='absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer transition-colors duration-200 hover:text-blue-600 focus:text-blue-600'
+            className='absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer transition-colors duration-200 hover:text-primary focus:text-primary'
             onClick={() => setShowPassword((prev) => !prev)}
             onKeyDown={(e) => {
               if (e.key === "Enter" || e.key === " ") {
@@ -94,10 +94,10 @@ export default function LoginForm() {
         )}
 
         <div className='flex items-center justify-between text-sm'>
-          <label className='flex items-center gap-2 cursor-pointer'>
+          <label className='flex items-center gap-2 cursor-pointer text-app'>
             <input
               type='checkbox'
-              className='accent-blue-500 cursor-pointer'
+              className='accent-primary cursor-pointer'
               {...register("rememberMe")}
             />
             Lembrar meu dados
@@ -105,19 +105,19 @@ export default function LoginForm() {
           <CustomLink href='/forget-password'> Esqueceu sua senha?</CustomLink>
         </div>
 
-        <Button className='w-full bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-md'>
+        <Button className='w-full bg-primary hover:bg-primary-dark text-white p-3 rounded-md'>
           Entrar
         </Button>
 
-        <div className='flex items-center my-4'>
-          <div className='flex-grow h-px bg-gray-300' />
-          <span className='mx-4 text-sm text-gray-500'>OU</span>
-          <div className='flex-grow h-px bg-gray-300' />
+        <div className='flex items-center my-4 '>
+          <div className='flex-grow h-px bg-secondary-200 border border-secondary-200' />
+          <span className='mx-4 text-sm text-secondary-500'>OU</span>
+          <div className='flex-grow h-px bg-secondary-200 border border-secondary-200' />
         </div>
 
         <OAuthButtons />
 
-        <p className='text-center text-sm text-gray-600'>
+        <p className='text-center text-sm text-secondary-600'>
           Não tem uma conta?{" "}
           <CustomLink href='/signin'> Cadastrar-se</CustomLink>
         </p>
