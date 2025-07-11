@@ -1,28 +1,42 @@
 // components/WalletDonutChart.tsx
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 
-const data = [
-  { name: "Bitcoin (BTC)", value: 24, color: "#22c55e" },
-  { name: "Ethereum (ETH)", value: 18, color: "#16a34a" },
-  { name: "Shard (SHARD)", value: 32, color: "#4ade80" },
-  { name: "Binance (BNB)", value: 22, color: "#15803d" },
-];
+interface WalletDonutChartProps {
+  data?: Array<{ name: string; value: number; color: string }>;
+  totalBalance?: string;
+  currency?: string;
+  assetCount?: number;
+  isLoading: boolean;
+}
 
-export default function WalletDonutChart() {
+export default function WalletDonutChart({
+  data = [
+    { name: "Bitcoin (BTC)", value: 24, color: "#22c55e" },
+    { name: "Ethereum (ETH)", value: 18, color: "#16a34a" },
+    { name: "Shard (SHARD)", value: 32, color: "#4ade80" },
+    { name: "Binance (BNB)", value: 22, color: "#15803d" },
+  ],
+  totalBalance = "12,433.35",
+  currency = "R$",
+  assetCount = 12,
+  isLoading,
+}: WalletDonutChartProps) {
   return (
     <div className='p-6'>
       <h2 className='text-center text-lg font-semibold mb-2 text-app'>
         My Wallet
       </h2>
       <p className='text-center text-primary text-2xl font-bold mb-4'>
-        € 12,433.35
+        {currency} {totalBalance}
       </p>
-      <p className='text-center text-sm text-secondary-500 mb-4'>12 Assets</p>
+      <p className='text-center text-sm text-secondary-500 mb-4'>
+        {assetCount} Assets
+      </p>
 
       <ResponsiveContainer width='100%' height={250}>
         <PieChart>
           <Pie
-            data={data}
+            data={isLoading ? [] : data}
             innerRadius={60}
             outerRadius={80}
             dataKey='value'

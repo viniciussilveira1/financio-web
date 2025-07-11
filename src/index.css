@@ -67,6 +67,10 @@ button:focus-visible {
   background-color: #22c55e;
 }
 
+.bg-secondary {
+  background-color: #06142236;
+}
+
 .bg-primary-light {
   background-color: #4ade80;
 }

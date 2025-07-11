@@ -83,12 +83,12 @@ export function useToast() {
 const getToastStyles = (type: ToastType) => {
   switch (type) {
     case "error":
-      return "border-red-500";
+      return "border-red-500 bg-red-500/10";
     case "warning":
-      return "border-yellow-400";
+      return "border-yellow-400 bg-yellow-400/10";
     case "info":
-      return "border-primary";
+      return "border-primary bg-primary/10";
     default:
-      return "border-primary";
+      return "border-primary bg-primary/10";
   }
 };

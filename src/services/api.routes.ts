@@ -1,6 +1,7 @@
 import type { Login } from "types/User";
 import { apiInstance } from "./config";
 import type { Register } from "react-router-dom";
+import type { CreateWallet } from "types/Wallets";
 
 export const login = async (loginData: Login) =>
   apiInstance.post(`/auth/login`, loginData).then((res) => res.data);
@@ -17,5 +18,8 @@ export const sendResetPasswordEmail = async (email: string) =>
 export const getWalletsList = async () =>
   apiInstance.get(`/wallets`).then((res) => res.data);
 
-export const getMovementsByWalletId = async (walletId: string) =>
+export const getMovementsByWalletId = async (walletId: number) =>
   apiInstance.get(`/movements/wallet/${walletId}`).then((res) => res.data);
+
+export const createWallet = async (walletData: CreateWallet) =>
+  apiInstance.post(`/wallets`, walletData).then((res) => res.data);
