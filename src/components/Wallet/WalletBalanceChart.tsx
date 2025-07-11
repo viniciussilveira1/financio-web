@@ -15,7 +15,11 @@ const data = [
   { date: "05/06", value: 3000 },
 ];
 
-export default function WalletBalanceChart() {
+export default function WalletBalanceChart({
+  isLoading,
+}: {
+  isLoading: boolean;
+}) {
   return (
     <div className='p-6'>
       <h2 className='text-primary text-xl mb-2 font-semibold'>
@@ -25,7 +29,7 @@ export default function WalletBalanceChart() {
 
       <div className='h-80'>
         <ResponsiveContainer width='100%' height='100%'>
-          <LineChart data={data}>
+          <LineChart data={isLoading ? [] : data}>
             <XAxis dataKey='date' stroke='#64748b' />
             <YAxis stroke='#64748b' />
             <Tooltip

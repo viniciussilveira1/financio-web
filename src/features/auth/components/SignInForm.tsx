@@ -1,8 +1,9 @@
 import { useForm } from "react-hook-form";
 import OAuthButtons from "@features/auth/components/OAuthButtons";
-import Button from "@components/Button";
+import Button from "@components/ui/Button";
 import { useMutation } from "@tanstack/react-query";
 import { registerUser } from "@services/api.routes";
+import CustomLink from "@components/ui/CustomLink";
 
 interface SignUpFormValues {
   name: string;
@@ -72,7 +73,6 @@ export default function SignInForm() {
           type='tel'
           placeholder='Telefone'
           {...register("phone", {
-            required: "Telefone obrigatório",
             pattern: {
               value: /^[0-9]{10,11}$/,
               message: "Telefone inválido",
@@ -118,25 +118,15 @@ export default function SignInForm() {
         </Button>
 
         <div className='flex items-center my-4'>
-          <div className='flex-grow h-px bg-secondary-200' />
+          <div className='flex-grow h-px border border-b-gray-600' />
           <span className='mx-4 text-sm text-secondary-500'>OU</span>
-          <div className='flex-grow h-px bg-secondary-200' />
+          <div className='flex-grow h-px border border-b-gray-600' />
         </div>
 
         <OAuthButtons />
 
         <p className='text-center text-sm text-secondary-600'>
-          Já tem uma conta?{" "}
-          <a
-            href='#'
-            className='text-primary hover:text-primary-dark hover:underline'
-            onClick={(e) => {
-              e.preventDefault();
-              window.location.href = "/login";
-            }}
-          >
-            Entrar
-          </a>
+          Já tem uma conta? <CustomLink href='/login'>Entrar</CustomLink>
         </p>
       </form>
     </div>

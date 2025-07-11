@@ -17,5 +17,5 @@ export const sendResetPasswordEmail = async (email: string) =>
 export const getWalletsList = async () =>
   apiInstance.get(`/wallets`).then((res) => res.data);
 
-export const getMovementsByWalletId = async (walletId: string) =>
+export const getMovementsByWalletId = async (walletId: number) =>
   apiInstance.get(`/movements/wallet/${walletId}`).then((res) => res.data);

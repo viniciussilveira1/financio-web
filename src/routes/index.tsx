@@ -2,9 +2,9 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LoginPage from "@features/auth/pages/LoginPage";
 import SignInPage from "@features/auth/pages/SignInPage";
 import ForgetPasswordPage from "@features/auth/pages/ForgetPasswordPage";
-import RequireAuth from "@components/RequireAuth";
+import RequireAuth from "@components/ui/RequireAuth";
 import DashboardPage from "@pages/DashboardPage";
-import Layout from "@components/Layout";
+import Layout from "@components/Layouts/Layout";
 import WalletPage from "@pages/wallets/WalletPage";
 
 export default function AppRoutes() {

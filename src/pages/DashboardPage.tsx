@@ -9,7 +9,7 @@ export default function DashboardPage() {
   const stats = [
     {
       title: "Total Balance",
-      value: "€ 45,231.89",
+      value: "R$ 45,231.89",
       change: "+20.1%",
       trend: "up",
       icon: FiDollarSign,
@@ -25,7 +25,7 @@ export default function DashboardPage() {
     },
     {
       title: "Monthly Growth",
-      value: "€ 2,340",
+      value: "R$ 2,340",
       change: "+15.3%",
       trend: "up",
       icon: FiTrendingUp,
@@ -33,7 +33,7 @@ export default function DashboardPage() {
     },
     {
       title: "Total Expenses",
-      value: "€ 12,234",
+      value: "R$ 12,234",
       change: "-8.2%",
       trend: "down",
       icon: FiTrendingDown,
@@ -92,25 +92,25 @@ export default function DashboardPage() {
             {[
               {
                 name: "Bitcoin Purchase",
-                amount: "+€ 1,200",
+                amount: "+R$ 1,200",
                 time: "2 hours ago",
                 type: "buy",
               },
               {
                 name: "Ethereum Sale",
-                amount: "-€ 800",
+                amount: "-R$ 800",
                 time: "4 hours ago",
                 type: "sell",
               },
               {
                 name: "BNB Transfer",
-                amount: "+€ 450",
+                amount: "+R$ 450",
                 time: "6 hours ago",
                 type: "transfer",
               },
               {
                 name: "ADA Purchase",
-                amount: "+€ 320",
+                amount: "+R$ 320",
                 time: "8 hours ago",
                 type: "buy",
               },

@@ -1,0 +1,44 @@
+interface DropDownItem {
+  id: number;
+  name: string;
+}
+
+interface DropDownProps {
+  items: DropDownItem[];
+  selectedId: number | null;
+  setSelectedId: (id: number | null) => void;
+}
+
+export default function DropDown({
+  items,
+  selectedId,
+  setSelectedId,
+}: DropDownProps) {
+  return (
+    <div className='mb-4'>
+      <label
+        htmlFor='wallet-select'
+        className='block mb-2 text-sm font-medium text-app'
+      >
+        Select Wallet
+      </label>
+      <select
+        id='wallet-select'
+        className='border border-secondary-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary'
+        value={selectedId ?? ""}
+        onChange={(e) => {
+          const value = e.target.value;
+          setSelectedId(value ? Number(value) : null);
+        }}
+      >
+        <option value=''>-- Choose a wallet --</option>
+        {items &&
+          items.map((item: DropDownItem) => (
+            <option key={item.id} value={item.id}>
+              {item.name || `Item #${item.id}`}
+            </option>
+          ))}
+      </select>
+    </div>
+  );
+}

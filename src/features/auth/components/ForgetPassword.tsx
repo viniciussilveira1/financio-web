@@ -1,8 +1,8 @@
 import { useForm } from "react-hook-form";
-import Button from "@components/Button";
+import Button from "@components/ui/Button";
 import { useMutation } from "@tanstack/react-query";
 import { sendResetPasswordEmail } from "@services/api.routes";
-import CustomLink from "@components/CustomLink";
+import CustomLink from "@components/ui/CustomLink";
 
 interface FormValues {
   email: string;

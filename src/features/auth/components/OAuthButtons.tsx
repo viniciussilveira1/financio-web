@@ -1,6 +1,10 @@
 import { FcGoogle } from "react-icons/fc";
 
 export default function OAuthButtons({ className }: { className?: string }) {
+  const baseUrl = import.meta.env.VITE_API_URL?.replace(/\/$/, "");
+  const googlePath = import.meta.env.VITE_GOOGLE_API_URL?.replace(/^\//, "");
+  const url = `${baseUrl}/${googlePath}`;
+
   return (
     <div>
       <button
@@ -12,20 +16,17 @@ export default function OAuthButtons({ className }: { className?: string }) {
           flex
           items-center
           justify-center
-          gap-2
           border
-          hover:bg-secondary-100 transition-colors rounded-md py-3 ${className}`}
+          bg-primary hover:bg-primary-dark text-white transition-colors rounded-md py-3 ${className}`}
         onClick={() => {
-          window.location.href = `${import.meta.env.VITE_API_URL}${
-            import.meta.env.VITE_GOOGLE_API_URL
-          }`;
+          window.location.href = url;
         }}
       >
         <div className='absolute left-4'>
-          <FcGoogle size={24} />
+          <FcGoogle size={28} />
         </div>
 
-        <span className='font-medium text-black'>Continuar com Google</span>
+        <span className='font-medium text-white'>Continuar com Google</span>
       </button>
     </div>
   );
