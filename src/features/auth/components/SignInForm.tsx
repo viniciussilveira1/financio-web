@@ -1,6 +1,10 @@
 import { useForm } from "react-hook-form";
 import OAuthButtons from "@features/auth/components/OAuthButtons";
+<<<<<<< HEAD
 import Button from "@components/ui/LoginButton";
+=======
+import Button from "@components/ui/Button";
+>>>>>>> 8ccd885ba9f828b25431f8d027211d9277a067f5
 import { useMutation } from "@tanstack/react-query";
 import { registerUser } from "@services/api.routes";
 import CustomLink from "@components/ui/CustomLink";
