@@ -28,7 +28,8 @@
       "@components/*": ["components/*"],
       "@features/*": ["features/*"],
       "@services/*": ["services/*"],
-      "@pages/*": ["pages/*"]
+      "@pages/*": ["pages/*"],
+      "@utils/*": ["utils/*"]
     },
     "types": ["node"]
   },

@@ -1,10 +1,5 @@
 import { useForm } from "react-hook-form";
 import OAuthButtons from "@features/auth/components/OAuthButtons";
-<<<<<<< HEAD
-import Button from "@components/ui/LoginButton";
-=======
-import Button from "@components/ui/Button";
->>>>>>> 8ccd885ba9f828b25431f8d027211d9277a067f5
 import { useMutation } from "@tanstack/react-query";
 import { login } from "@services/api.routes";
 import CustomLink from "@components/ui/CustomLink";
@@ -13,6 +8,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PasswordInput from "@components/ui/PasswordInput";
 import type { FormValues } from "types/Auth";
+import LoginButton from "@components/ui/LoginButton";
 
 export default function LoginForm() {
   const {
@@ -80,9 +76,9 @@ export default function LoginForm() {
           <CustomLink href='/forget-password'> Esqueceu sua senha?</CustomLink>
         </div>
 
-        <Button className='w-full bg-primary hover:bg-primary-dark text-white p-3 rounded-md'>
+        <LoginButton className='w-full bg-primary hover:bg-primary-dark text-white p-3 rounded-md'>
           Entrar
-        </Button>
+        </LoginButton>
 
         <div className='flex items-center my-4 '>
           <div className='flex-grow h-px border border-b-gray-600' />

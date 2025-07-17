@@ -7,6 +7,7 @@ import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { createWallet } from "@services/api.routes";
 import { useToast } from "@components/Provider/ToastProvider";
+import { refetchData } from "@utils/queryClient";
 
 interface CreateWalletFormData {
   name: string;
@@ -33,6 +34,7 @@ export default function CreateWallet() {
     mutationFn: createWallet,
     onSuccess: () => {
       addToast("Carteira criada com sucesso");
+      refetchData("wallets");
       onCancel();
     },
     onError: () => {

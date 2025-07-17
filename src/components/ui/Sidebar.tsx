@@ -38,6 +38,11 @@ const Sidebar: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/login");
+  };
+
   return (
     <div className='h-screen w-64 bg-sidebar text-sidebar border-r border-sidebar p-4 flex flex-col justify-between'>
       <div>
@@ -96,7 +101,10 @@ const Sidebar: React.FC = () => {
             <PiUserFocus className='w-8 h-8 text-primary' />
             <span className='text-sm font-medium'>USUARIO</span>
           </div>
-          <FiLogOut className='w-4 h-4 text-secondary-400 cursor-pointer hover:text-primary transition-colors' />
+          <FiLogOut
+            className='w-4 h-4 text-secondary-400 cursor-pointer hover:text-primary transition-colors'
+            onClick={handleLogout}
+          />
         </div>
       </div>
     </div>

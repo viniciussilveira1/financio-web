@@ -6,6 +6,7 @@ import RequireAuth from "@components/ui/RequireAuth";
 import DashboardPage from "@pages/DashboardPage";
 import Layout from "@components/Layouts/Layout";
 import WalletPage from "@pages/wallets/WalletPage";
+import NotFound from "@pages/NotFound";
 
 export default function AppRoutes() {
   return (
@@ -21,6 +22,8 @@ export default function AppRoutes() {
             <Route path='/wallets' element={<WalletPage />} />
           </Route>
         </Route>
+
+        <Route path='*' element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );

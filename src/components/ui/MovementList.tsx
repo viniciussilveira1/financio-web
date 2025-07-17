@@ -1,10 +1,26 @@
-interface Movement {
+import { formatCurrency, formatDate } from "@utils/formatters";
+
+export interface Movement {
   id: number;
+  amount: string;
+  type: "DESPESA" | "RECEITA";
+  category: string;
   description: string;
   date: string;
-  amount: number;
-  currency: string;
+  walletId: number;
+  createdAt: string;
+  updatedAt: string;
 }
+
+const categoryIcons: Record<string, string> = {
+  LAZER: "🎮",
+  ALIMENTACAO: "🍔",
+  TRANSPORTE: "🚌",
+  SAUDE: "💊",
+  MORADIA: "🏠",
+  EDUCACAO: "📚",
+  OUTROS: "💼",
+};
 
 export default function MovementList({
   movements,
@@ -13,7 +29,6 @@ export default function MovementList({
   movements: Movement[];
   isLoading: boolean;
 }) {
-  console.log(movements);
   return (
     <ul className='divide-y divide-secondary-100'>
       {isLoading ? (
@@ -21,14 +36,21 @@ export default function MovementList({
           Carregando movimentos...
         </div>
       ) : (
-        movements.map((movement) => (
-          <li key={movement.id} className='p-4 flex flex-col'>
-            <span className='font-medium'>{movement.description}</span>
-            <span className='text-sm text-secondary-500'>
-              {movement.date} - {movement.amount} {movement.currency}
-            </span>
-          </li>
-        ))
+        movements.map((movement) => {
+          const icon = categoryIcons[movement.category] || "💼";
+
+          return (
+            <li key={movement.id} className='p-4 flex flex-col'>
+              <span className='font-medium flex items-center gap-2'>
+                <span>{icon}</span>
+                <span>{movement.description}</span>
+              </span>
+              <span className='text-sm text-secondary-500'>
+                {formatDate(movement.date)} - {formatCurrency(movement.amount)}
+              </span>
+            </li>
+          );
+        })
       )}
     </ul>
   );
