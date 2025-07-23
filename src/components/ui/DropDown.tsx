@@ -27,7 +27,7 @@ export default function DropDown({
         htmlFor='wallet-select'
         className='block mb-2 text-sm font-medium text-app'
       >
-        Select Wallet
+        Selecione uma carteira
       </label>
       <select
         id='wallet-select'

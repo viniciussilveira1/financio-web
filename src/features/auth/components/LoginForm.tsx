@@ -7,7 +7,7 @@ import { useToast } from "@components/Provider/ToastProvider";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PasswordInput from "@components/ui/PasswordInput";
-import type { FormValues } from "types/Auth";
+import type { FormValues } from "interfaces/Auth";
 import LoginButton from "@components/ui/LoginButton";
 
 export default function LoginForm() {

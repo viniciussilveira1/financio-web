@@ -29,7 +29,8 @@
       "@features/*": ["features/*"],
       "@services/*": ["services/*"],
       "@pages/*": ["pages/*"],
-      "@utils/*": ["utils/*"]
+      "@utils/*": ["utils/*"],
+      "@interfaces/*": ["interfaces/*"]
     },
     "types": ["node"]
   },

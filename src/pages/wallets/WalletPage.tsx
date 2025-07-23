@@ -1,5 +1,3 @@
-import WalletBalanceChart from "@components/Wallet/WalletBalanceChart";
-import WalletDonutChart from "@components/Wallet/WalletDonutChart";
 import { useQuery } from "@tanstack/react-query";
 import { getWalletsList } from "@services/api.routes";
 import { useEffect, useState } from "react";
@@ -7,15 +5,14 @@ import { getMovementsByWalletId } from "@services/api.routes";
 import MovementList from "@components/ui/MovementList";
 import DropDown from "@components/ui/DropDown";
 import CreateWallet from "@components/Wallet/modals/CreateWallet";
+import WalletBalanceChart from "@components/Wallet/charts/WalletBalanceChart";
+import WalletDonutChart from "@components/Wallet/charts/WalletDonutChart";
+import Line from "@components/ui/Line";
 
 export default function WalletsPage() {
   const [selectedWalletId, setSelectedWalletId] = useState<number | null>(null);
 
-  const {
-    data: wallets,
-    isLoading: isWalletsLoading,
-    isSuccess: isWalletsSuccess,
-  } = useQuery({
+  const { data: wallets, isLoading: isWalletsLoading } = useQuery({
     queryKey: ["wallets"],
     queryFn: () => getWalletsList(),
   });
@@ -28,7 +25,7 @@ export default function WalletsPage() {
 
   useEffect(() => {
     setSelectedWalletId(wallets?.[0]?.id || null);
-  }, [isWalletsSuccess, wallets]);
+  }, [wallets]);
 
   return (
     <div className='p-6 space-y-6'>
@@ -38,9 +35,9 @@ export default function WalletsPage() {
           selectedId={selectedWalletId}
           setSelectedId={setSelectedWalletId}
         />
-
         <CreateWallet />
       </div>
+      <Line />
 
       <div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
         <div className='md:col-span-2 bg-card rounded-xl shadow-sm border border-secondary-200'>
@@ -52,12 +49,10 @@ export default function WalletsPage() {
         </div>
       </div>
 
-      <div className='bg-card rounded-xl shadow-sm border border-secondary-200 mt-6'>
-        <MovementList
-          movements={movements?.items || []}
-          isLoading={isMovementsLoading}
-        />
-      </div>
+      <MovementList
+        movements={movements?.items || []}
+        isLoading={isMovementsLoading}
+      />
     </div>
   );
 }
