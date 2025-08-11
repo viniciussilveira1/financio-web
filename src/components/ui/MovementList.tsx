@@ -1,5 +1,4 @@
 import { formatCurrency, formatDate } from "@utils/formatters";
-import Line from "./Line";
 import CreateMovement from "@components/Movements/CreateMovement";
 import { MovementType } from "@interfaces/Movements";
 import Tooltip from "./Tooltip";
@@ -43,76 +42,66 @@ const categoryIcons: Record<string, string> = {
 export default function MovementList({
   movements,
   isLoading,
+  walletId,
 }: {
   movements: Movement[];
   isLoading: boolean;
+  walletId: number;
 }) {
   return (
-    <>
-      <div className='flex justify-end items-center mb-4'>
-        <CreateMovement />
+    <section className='bg-white rounded-2xl shadow-md border border-gray-200 p-6 mt-6'>
+      <div className='flex justify-between items-center mb-5'>
+        <h3 className='text-xl font-semibold text-gray-800'>Movimentações</h3>
+        <CreateMovement walletId={walletId} />
       </div>
-      <Line />
-      <div className='bg-card rounded-xl shadow-md border border-secondary-200 mt-6'>
-        <ul className='divide-y divide-secondary-100'>
-          {isLoading ? (
-            <div className='p-6 text-center text-secondary-500 text-lg'>
-              Carregando movimentos...
-            </div>
-          ) : movements.length === 0 ? (
-            <div className='p-6 text-center text-secondary-400 text-base'>
-              Nenhum movimento encontrado.
-            </div>
-          ) : (
-            movements.map((movement) => {
-              const icon =
-                categoryIcons[movement.category] || categoryIcons.OUTROS;
 
-              return (
-                <li
-                  key={movement.id}
-                  className='p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 hover:bg-secondary-50 transition-colors rounded-lg'
-                >
-                  <div className='flex items-center gap-4 flex-1 min-w-0'>
-                    <Tooltip label={categoryLabels[movement.category]}>
-                      <span className='text-2xl cursor-pointer'>{icon}</span>
-                    </Tooltip>
-                    <div className='flex flex-col min-w-0'>
-                      <div className='flex items-center gap-2'>
-                        <span
-                          className={`font-bold text-lg ${
-                            movement.type === MovementType.DESPESA
-                              ? "text-red-500"
-                              : "text-green-600"
-                          }`}
-                        >
-                          {movement.type === MovementType.DESPESA
-                            ? " - "
-                            : " + "}
-                          {formatCurrency(movement.amount)}
-                        </span>
-                      </div>
+      {isLoading ? (
+        <p className='text-center text-gray-500 py-10 text-lg'>
+          Carregando movimentos...
+        </p>
+      ) : movements.length === 0 ? (
+        <p className='text-center text-gray-400 py-10 text-base'>
+          Nenhum movimento encontrado.
+        </p>
+      ) : (
+        <ul className='divide-y divide-gray-100'>
+          {movements.map((movement) => {
+            const icon =
+              categoryIcons[movement.category] || categoryIcons.OUTROS;
+            const isExpense = movement.type === MovementType.DESPESA;
 
-                      <span className='font-medium text-base truncate text-secondary-900'>
-                        {formatDate(movement.date)} - {movement.description}
-                      </span>
-                    </div>
-                  </div>
-
-                  <div className='hidden sm:flex flex-col items-end min-w-[160px] ml-4'>
-                    <span className='text-[14px] text-secondary-300'>
-                      Criado: {formatDate(movement.createdAt)}
+            return (
+              <li
+                key={movement.id}
+                className='py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 hover:bg-gray-50 transition rounded-lg px-3'
+              >
+                <div className='flex items-center gap-4 flex-1 min-w-0'>
+                  <Tooltip label={categoryLabels[movement.category]}>
+                    <span className='text-3xl cursor-pointer'>{icon}</span>
+                  </Tooltip>
+                  <div className='flex flex-col min-w-0'>
+                    <span
+                      className={`font-bold text-lg ${
+                        isExpense ? "text-red-600" : "text-green-700"
+                      }`}
+                    >
+                      {isExpense ? "-" : "+"} {formatCurrency(movement.amount)}
                     </span>
-                    <span className='text-[14px] text-secondary-300'>
-                      Atualizado: {formatDate(movement.updatedAt)}
+                    <span className='text-sm text-gray-700 truncate max-w-[300px]'>
+                      {formatDate(movement.date)} - {movement.description}
                     </span>
                   </div>
-                </li>
-              );
-            })
-          )}
+                </div>
+
+                <div className='hidden sm:flex flex-col items-end min-w-[160px] ml-6 text-gray-400 text-xs space-y-1'>
+                  <span>Criado: {formatDate(movement.createdAt)}</span>
+                  <span>Atualizado: {formatDate(movement.updatedAt)}</span>
+                </div>
+              </li>
+            );
+          })}
         </ul>
-      </div>
-    </>
+      )}
+    </section>
   );
 }

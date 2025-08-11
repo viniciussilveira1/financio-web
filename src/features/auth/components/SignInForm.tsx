@@ -4,22 +4,25 @@ import { useMutation } from "@tanstack/react-query";
 import { registerUser } from "@services/api.routes";
 import CustomLink from "@components/ui/CustomLink";
 import Button from "@components/ui/LoginButton";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { signUpSchema } from "@utils/validations";
+import { z } from "zod";
+import { useToast } from "@components/Provider/ToastProvider";
+import { useNavigate } from "react-router-dom";
 
-interface SignUpFormValues {
-  name: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-  phone: string;
-}
+type SignUpFormValues = z.infer<typeof signUpSchema>;
 
 export default function SignInForm() {
   const {
     register,
     handleSubmit,
     formState: { errors },
-    watch,
-  } = useForm<SignUpFormValues>();
+  } = useForm<SignUpFormValues>({
+    resolver: zodResolver(signUpSchema),
+  });
+
+  const { addToast } = useToast();
+  const navigate = useNavigate();
 
   const { mutateAsync } = useMutation({
     mutationFn: registerUser,
@@ -27,11 +30,15 @@ export default function SignInForm() {
 
   const onSubmit = async (data: SignUpFormValues) => {
     try {
-      const response = await mutateAsync(data);
-      console.log("Cadastro bem-sucedido", response);
-      // Aqui você pode redirecionar ou mostrar uma mensagem de sucesso
-    } catch (error) {
-      console.error("Erro ao cadastrar:", error);
+      await mutateAsync(data);
+      addToast("Cadastro bem-sucedido");
+      navigate("/login");
+    } catch (error: any) {
+      const backendMessage =
+        error.response?.data?.message ||
+        error.message ||
+        "Erro ao fazer cadastro";
+      addToast(backendMessage, "error");
     }
   };
 
@@ -42,7 +49,7 @@ export default function SignInForm() {
         className='w-full max-w-md space-y-4'
       >
         <h2 className='text-2xl font-bold text-center text-app'>
-          Crie sua conta no Financio!
+          Crie sua conta no <span className='text-green-500'>Financio!</span>
         </h2>
         <p className='text-sm text-secondary-500 text-center'>
           Controle suas finanças de forma simples. Cadastre carteiras e registre
@@ -96,10 +103,6 @@ export default function SignInForm() {
           placeholder='Confirmar Senha'
           {...register("confirmPassword", {
             required: "Confirmação de senha obrigatória",
-            validate: (value) => {
-              const password = watch("password");
-              return value === password || "As senhas não coincidem";
-            },
           })}
           className='w-full p-3 border border-secondary-200 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary bg-white'
         />

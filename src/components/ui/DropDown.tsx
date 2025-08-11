@@ -16,9 +16,9 @@ export default function DropDown({
 }: DropDownProps) {
   if (items.length === 0)
     return (
-      <div className='text-sm text-secondary-500'>
+      <span className='text-2xl text-secondary-500'>
         Nenhuma carteira encontrada
-      </div>
+      </span>
     );
 
   return (

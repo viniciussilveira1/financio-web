@@ -8,6 +8,7 @@ interface TextInputProps {
   error?: string;
   disabled?: boolean;
   className?: string;
+  type?: React.HTMLInputTypeAttribute;
 }
 
 const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
@@ -20,6 +21,7 @@ const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
       error,
       disabled,
       className = "",
+      type,
       ...props
     },
     ref
@@ -34,7 +36,7 @@ const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
         <input
           ref={ref}
           id={id}
-          type='text'
+          type={type || "text"}
           required={required}
           placeholder={placeholder}
           disabled={disabled}

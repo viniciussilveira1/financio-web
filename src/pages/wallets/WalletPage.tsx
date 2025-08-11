@@ -1,20 +1,19 @@
 import { useQuery } from "@tanstack/react-query";
-import { getWalletsList } from "@services/api.routes";
+import { getWalletsList, getMovementsByWalletId } from "@services/api.routes";
 import { useEffect, useState } from "react";
-import { getMovementsByWalletId } from "@services/api.routes";
+
 import MovementList from "@components/ui/MovementList";
 import DropDown from "@components/ui/DropDown";
 import CreateWallet from "@components/Wallet/modals/CreateWallet";
 import WalletBalanceChart from "@components/Wallet/charts/WalletBalanceChart";
 import WalletDonutChart from "@components/Wallet/charts/WalletDonutChart";
-import Line from "@components/ui/Line";
 
 export default function WalletsPage() {
   const [selectedWalletId, setSelectedWalletId] = useState<number | null>(null);
 
   const { data: wallets, isLoading: isWalletsLoading } = useQuery({
     queryKey: ["wallets"],
-    queryFn: () => getWalletsList(),
+    queryFn: getWalletsList,
   });
 
   const { data: movements, isLoading: isMovementsLoading } = useQuery({
@@ -24,12 +23,14 @@ export default function WalletsPage() {
   });
 
   useEffect(() => {
-    setSelectedWalletId(wallets?.[0]?.id || null);
+    if (wallets?.length) {
+      setSelectedWalletId(wallets[0].id);
+    }
   }, [wallets]);
 
   return (
-    <div className='p-6 space-y-6'>
-      <div className='flex justify-between items-center'>
+    <div className='p-6 mx-auto '>
+      <div className='flex flex-col md:flex-row items-start md:items-center justify-between gap-4'>
         <DropDown
           items={wallets || []}
           selectedId={selectedWalletId}
@@ -37,19 +38,25 @@ export default function WalletsPage() {
         />
         <CreateWallet />
       </div>
-      <Line />
 
       <div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
-        <div className='md:col-span-2 bg-card rounded-xl shadow-sm border border-secondary-200'>
+        <section className='md:col-span-2 bg-white rounded-2xl shadow-md border border-gray-200 p-6'>
+          <h2 className='text-lg font-semibold text-green-600 mb-3'>
+            Wallet Balance
+          </h2>
           <WalletBalanceChart isLoading={isWalletsLoading} />
-        </div>
+        </section>
 
-        <div className='bg-card rounded-xl shadow-sm border border-secondary-200 flex flex-col justify-between'>
+        <section className='bg-white rounded-2xl shadow-md border border-gray-200 p-6 flex flex-col justify-center'>
+          <h2 className='text-lg font-semibold text-green-600 mb-3 text-center'>
+            My Wallet
+          </h2>
           <WalletDonutChart isLoading={isWalletsLoading} />
-        </div>
+        </section>
       </div>
 
       <MovementList
+        walletId={selectedWalletId || 0}
         movements={movements?.items || []}
         isLoading={isMovementsLoading}
       />

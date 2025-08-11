@@ -12,6 +12,11 @@ export enum MovementType {
   DESPESA = "DESPESA",
 }
 
+export const MovementTypeOptions = {
+  [MovementType.RENDA]: "Renda",
+  [MovementType.DESPESA]: "Despesa",
+};
+
 export enum MovementCategory {
   // Income
   SALARIO = "SALARIO",
