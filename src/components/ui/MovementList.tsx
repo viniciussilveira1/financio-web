@@ -1,19 +1,9 @@
 import { formatCurrency, formatDate } from "@utils/formatters";
 import CreateMovement from "@components/Movements/CreateMovement";
-import { MovementType } from "@interfaces/Movements";
+import { MovementType, type MovementResponse } from "@interfaces/Movements";
 import Tooltip from "./Tooltip";
 
-export interface Movement {
-  id: number;
-  amount: string;
-  type: MovementType;
-  category: string;
-  description: string;
-  date: string;
-  walletId: number;
-  createdAt: string;
-  updatedAt: string;
-}
+
 
 const categoryLabels: Record<string, string> = {
   SALARIO: "Salário",
@@ -44,7 +34,7 @@ export default function MovementList({
   isLoading,
   walletId,
 }: {
-  movements: Movement[];
+  movements: MovementResponse[];
   isLoading: boolean;
   walletId: number;
 }) {

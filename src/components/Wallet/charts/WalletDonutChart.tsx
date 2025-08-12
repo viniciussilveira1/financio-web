@@ -1,71 +1,111 @@
-// components/WalletDonutChart.tsx
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
+import { useMemo } from "react";
+import { formatCurrency } from "@utils/formatters";
+import {
+  MovementCategory,
+  MovementCategoryFriendly,
+} from "@interfaces/Movements";
+
+interface Movement {
+  category: string;
+  amount: string;
+}
 
 interface WalletDonutChartProps {
-  data?: Array<{ name: string; value: number; color: string }>;
+  movements?: Movement[];
   totalBalance?: string;
   currency?: string;
   assetCount?: number;
   isLoading: boolean;
 }
 
+const COLORS = [
+  "#22c55e",
+  "#16a34a",
+  "#4ade80",
+  "#15803d",
+  "#a3e635",
+  "#84cc16",
+  "#65a30d",
+  "#4d7c0f",
+];
+
 export default function WalletDonutChart({
-  data = [
-    { name: "Bitcoin (BTC)", value: 24, color: "#22c55e" },
-    { name: "Ethereum (ETH)", value: 18, color: "#16a34a" },
-    { name: "Shard (SHARD)", value: 32, color: "#4ade80" },
-    { name: "Binance (BNB)", value: 22, color: "#15803d" },
-  ],
-  totalBalance = "12,433.35",
-  currency = "R$",
-  assetCount = 12,
+  movements = [],
   isLoading,
 }: WalletDonutChartProps) {
+  const data = useMemo(() => {
+    if (isLoading || movements.length === 0) return [];
+
+    const map = new Map<string, number>();
+
+    for (const mov of movements) {
+      const value = Number(mov.amount);
+      if (map.has(mov.category)) {
+        map.set(mov.category, map.get(mov.category)! + value);
+      } else {
+        map.set(mov.category, value);
+      }
+    }
+
+    return Array.from(map.entries()).map(([category, value], index) => ({
+      name: category,
+      value,
+      color: COLORS[index % COLORS.length],
+    }));
+  }, [movements, isLoading]);
+
   return (
-    <div className='p-6'>
-      <h2 className='text-center text-lg font-semibold mb-2 text-app'>
-        My Wallet
+    <section className='bg-white rounded-2xl shadow-md border border-gray-200 p-6 flex flex-col justify-center'>
+      <h2 className='text-lg font-semibold text-green-600 mb-3 text-center'>
+        Minha Carteira
       </h2>
-      <p className='text-center text-primary text-2xl font-bold mb-4'>
-        {currency} {totalBalance}
-      </p>
-      <p className='text-center text-sm text-secondary-500 mb-4'>
-        {assetCount} Assets
-      </p>
+      <div className='p-6'>
+        <p className='text-center text-primary text-2xl font-bold mb-4'>
+          {movements.length} Ativos
+        </p>
 
-      <ResponsiveContainer width='100%' height={250}>
-        <PieChart>
-          <Pie
-            data={isLoading ? [] : data}
-            innerRadius={60}
-            outerRadius={80}
-            dataKey='value'
-            stroke='none'
-          >
-            {data.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill={entry.color} />
-            ))}
-          </Pie>
-        </PieChart>
-      </ResponsiveContainer>
+        <ResponsiveContainer width='100%' height={250}>
+          <PieChart>
+            <Pie
+              data={isLoading ? [] : data}
+              innerRadius={60}
+              outerRadius={80}
+              dataKey='value'
+              stroke='none'
+              label={({ name, percent }) =>
+                `${MovementCategoryFriendly[name as MovementCategory]}: ${(
+                  (percent ?? 0) * 100
+                ).toFixed(0)}%`
+              }
+            >
+              {data.map((entry, index) => (
+                <Cell key={`cell-${index}`} fill={entry.color} />
+              ))}
+            </Pie>
+          </PieChart>
+        </ResponsiveContainer>
 
-      <div className='mt-4'>
-        {data.map((item, index) => (
-          <div
-            key={index}
-            className='flex justify-between text-sm mb-1 text-app'
-          >
-            <span className='flex items-center gap-2'>
-              <span
-                className='w-3 h-3 rounded-full'
-                style={{ backgroundColor: item.color }}
-              />
-              {item.name}
-            </span>
-            <span className='font-bold text-primary'>{item.value}%</span>
-          </div>
-        ))}
+        <div className='mt-4'>
+          {data.map((item, index) => (
+            <div
+              key={index}
+              className='flex justify-between text-sm mb-1 text-app'
+            >
+              <span className='flex items-center gap-2'>
+                <span
+                  className='w-3 h-3 rounded-full'
+                  style={{ backgroundColor: item.color }}
+                />
+                {MovementCategoryFriendly[item.name as MovementCategory]}
+              </span>
+              <span className='font-bold text-primary'>
+                {formatCurrency(item.value)}
+              </span>
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
+    </section>
   );
 }

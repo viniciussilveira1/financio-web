@@ -7,6 +7,18 @@ export interface CreateMovement {
   walletId: number;
 }
 
+export interface MovementResponse {
+  id: number;
+  amount: string;
+  type: MovementType;
+  category: string;
+  description: string;
+  date: string;
+  walletId: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export enum MovementType {
   RENDA = "RENDA",
   DESPESA = "DESPESA",
@@ -33,3 +45,20 @@ export enum MovementCategory {
   // Ambos
   OUTROS = "OUTROS",
 }
+
+export const MovementCategoryFriendly = {
+  // Income
+  [MovementCategory.SALARIO]: "Salário",
+  [MovementCategory.INVESTIMENTOS]: "Investimentos",
+
+  // Expense
+  [MovementCategory.ALIMENTACAO]: "Alimentação",
+  [MovementCategory.TRANSPORTE]: "Transporte",
+  [MovementCategory.LAZER]: "Lazer",
+  [MovementCategory.SAUDE]: "Saúde",
+  [MovementCategory.MORADIA]: "Moradia",
+  [MovementCategory.EDUCACAO]: "Educação",
+
+  // Ambos
+  [MovementCategory.OUTROS]: "Outros",
+};

@@ -7,6 +7,7 @@ import DropDown from "@components/ui/DropDown";
 import CreateWallet from "@components/Wallet/modals/CreateWallet";
 import WalletBalanceChart from "@components/Wallet/charts/WalletBalanceChart";
 import WalletDonutChart from "@components/Wallet/charts/WalletDonutChart";
+import WalletsPageSkeleton from "@components/Skeletons/WalletsPageSkeleton";
 
 export default function WalletsPage() {
   const [selectedWalletId, setSelectedWalletId] = useState<number | null>(null);
@@ -28,6 +29,10 @@ export default function WalletsPage() {
     }
   }, [wallets]);
 
+  if (isWalletsLoading) {
+    return <WalletsPageSkeleton />;
+  }
+
   return (
     <div className='p-6 mx-auto '>
       <div className='flex flex-col md:flex-row items-start md:items-center justify-between gap-4'>
@@ -40,19 +45,15 @@ export default function WalletsPage() {
       </div>
 
       <div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
-        <section className='md:col-span-2 bg-white rounded-2xl shadow-md border border-gray-200 p-6'>
-          <h2 className='text-lg font-semibold text-green-600 mb-3'>
-            Wallet Balance
-          </h2>
-          <WalletBalanceChart isLoading={isWalletsLoading} />
-        </section>
-
-        <section className='bg-white rounded-2xl shadow-md border border-gray-200 p-6 flex flex-col justify-center'>
-          <h2 className='text-lg font-semibold text-green-600 mb-3 text-center'>
-            My Wallet
-          </h2>
-          <WalletDonutChart isLoading={isWalletsLoading} />
-        </section>
+        <WalletBalanceChart
+          currentBalance={movements?.currentBalance || 0}
+          movements={movements?.items || []}
+          isLoading={isMovementsLoading}
+        />
+        <WalletDonutChart
+          isLoading={isMovementsLoading}
+          movements={movements?.items || []}
+        />
       </div>
 
       <MovementList
