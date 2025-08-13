@@ -2,8 +2,9 @@ import { formatCurrency, formatDate } from "@utils/formatters";
 import CreateMovement from "@components/Movements/CreateMovement";
 import { MovementType, type MovementResponse } from "@interfaces/Movements";
 import Tooltip from "./Tooltip";
-
-
+import IconButton from "./IconButton";
+import { PiPencil, PiTrash } from "react-icons/pi";
+import InfoTooltip from "./InfoTooltip";
 
 const categoryLabels: Record<string, string> = {
   SALARIO: "Salário",
@@ -67,26 +68,39 @@ export default function MovementList({
               >
                 <div className='flex items-center gap-4 flex-1 min-w-0'>
                   <Tooltip label={categoryLabels[movement.category]}>
-                    <span className='text-3xl cursor-pointer'>{icon}</span>
+                    <span className='text-3xl'>{icon}</span>
                   </Tooltip>
                   <div className='flex flex-col min-w-0'>
                     <span
-                      className={`font-bold text-lg ${
+                      className={`font-bold text-lg break-words ${
                         isExpense ? "text-red-600" : "text-green-700"
                       }`}
                     >
-                      {isExpense ? "-" : "+"} {formatCurrency(movement.amount)}
+                      {isExpense ? "-" : "+"} {formatCurrency(movement.amount)}{" "}
+                      <InfoTooltip
+                        criado={formatDate(movement.createdAt)}
+                        atualizado={formatDate(movement.updatedAt)}
+                      />
                     </span>
-                    <span className='text-sm text-gray-700 truncate max-w-[300px]'>
+                    <span className='text-sm text-gray-700 truncate max-w-full sm:max-w-[300px]'>
                       {formatDate(movement.date)} - {movement.description}
                     </span>
                   </div>
                 </div>
 
-                <div className='hidden sm:flex flex-col items-end min-w-[160px] ml-6 text-gray-400 text-xs space-y-1'>
-                  <span>Criado: {formatDate(movement.createdAt)}</span>
-                  <span>Atualizado: {formatDate(movement.updatedAt)}</span>
-                </div>
+                <div className='flex flex-col sm:items-end min-w-[160px] text-gray-400 text-xs space-y-1'></div>
+                <IconButton
+                  onClick={() => {
+                    console.log("editar movimento");
+                  }}
+                  icon={<PiPencil />}
+                />
+                <IconButton
+                  onClick={() => {
+                    console.log("deletar movimento");
+                  }}
+                  icon={<PiTrash />}
+                />
               </li>
             );
           })}

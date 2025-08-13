@@ -147,7 +147,6 @@ export default function CreateMovement({ walletId }: { walletId: number }) {
             {categoriesToShow.map((cat) => (
               <option key={cat} value={cat}>
                 {cat.charAt(0) + cat.slice(1).toLowerCase()}{" "}
-                {/* formata o texto */}
               </option>
             ))}
           </select>

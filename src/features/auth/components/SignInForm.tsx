@@ -49,7 +49,7 @@ export default function SignInForm() {
         className='w-full max-w-md space-y-4'
       >
         <h2 className='text-2xl font-bold text-center text-app'>
-          Crie sua conta no <span className='text-green-500'>Financio!</span>
+          Crie sua conta no <span className='text-primary'>Financio!</span>
         </h2>
         <p className='text-sm text-secondary-500 text-center'>
           Controle suas finanças de forma simples. Cadastre carteiras e registre

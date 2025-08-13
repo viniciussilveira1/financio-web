@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { getWalletsList, getMovementsByWalletId } from "@services/api.routes";
 import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 
 import MovementList from "@components/ui/MovementList";
 import DropDown from "@components/ui/DropDown";
@@ -10,7 +11,16 @@ import WalletDonutChart from "@components/Wallet/charts/WalletDonutChart";
 import WalletsPageSkeleton from "@components/Skeletons/WalletsPageSkeleton";
 
 export default function WalletsPage() {
-  const [selectedWalletId, setSelectedWalletId] = useState<number | null>(null);
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const walletIdFromUrl = searchParams.get("walletId");
+  const parsedWalletId = walletIdFromUrl ? Number(walletIdFromUrl) : null;
+
+  const [selectedWalletId, setSelectedWalletId] = useState<number | null>(
+    parsedWalletId
+  );
+
+  const [activeChart, setActiveChart] = useState(0);
 
   const { data: wallets, isLoading: isWalletsLoading } = useQuery({
     queryKey: ["wallets"],
@@ -24,18 +34,43 @@ export default function WalletsPage() {
   });
 
   useEffect(() => {
-    if (wallets?.length) {
-      setSelectedWalletId(wallets[0].id);
+    if (selectedWalletId !== null) {
+      setSearchParams({ walletId: selectedWalletId.toString() });
     }
-  }, [wallets]);
+  }, [selectedWalletId, setSearchParams]);
+
+  useEffect(() => {
+    if (wallets?.length) {
+      const walletExists = wallets.some((w) => w.id === selectedWalletId);
+      if (!walletExists) {
+        const firstWalletId = wallets[0].id;
+        setSelectedWalletId(firstWalletId);
+        setSearchParams({ walletId: firstWalletId.toString() });
+      }
+    }
+  }, [wallets, selectedWalletId, setSearchParams]);
 
   if (isWalletsLoading) {
     return <WalletsPageSkeleton />;
   }
 
+  const charts = [
+    <WalletBalanceChart
+      key='balance'
+      currentBalance={movements?.currentBalance || 0}
+      movements={movements?.items || []}
+      isLoading={isMovementsLoading}
+    />,
+    <WalletDonutChart
+      key='donut'
+      isLoading={isMovementsLoading}
+      movements={movements?.items || []}
+    />,
+  ];
+
   return (
-    <div className='p-6 mx-auto '>
-      <div className='flex flex-col md:flex-row items-start md:items-center justify-between gap-4'>
+    <div className='p-4 lg:p-6 mx-auto'>
+      <div className='flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 sm:gap-4 mb-6'>
         <DropDown
           items={wallets || []}
           selectedId={selectedWalletId}
@@ -44,16 +79,22 @@ export default function WalletsPage() {
         <CreateWallet />
       </div>
 
-      <div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
-        <WalletBalanceChart
-          currentBalance={movements?.currentBalance || 0}
-          movements={movements?.items || []}
-          isLoading={isMovementsLoading}
-        />
-        <WalletDonutChart
-          isLoading={isMovementsLoading}
-          movements={movements?.items || []}
-        />
+      <div className='hidden lg:grid grid-cols-3 gap-6 mb-6'>{charts}</div>
+
+      <div className='lg:hidden relative w-full mb-6'>
+        {charts[activeChart]}
+        <button
+          onClick={() => setActiveChart((prev) => (prev === 0 ? 1 : 0))}
+          className='absolute top-1/2 right-3 -translate-y-1/2 bg-white border border-gray-300 rounded-full p-2 shadow hover:bg-gray-50 transition'
+        >
+          ➡
+        </button>
+        <button
+          onClick={() => setActiveChart((prev) => (prev === 0 ? 1 : 0))}
+          className='absolute top-1/2 left-3 -translate-y-1/2 bg-white border border-gray-300 rounded-full p-2 shadow hover:bg-gray-50 transition'
+        >
+          ⬅
+        </button>
       </div>
 
       <MovementList

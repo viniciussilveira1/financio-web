@@ -17,7 +17,11 @@ export default function OAuthButtons({ className }: { className?: string }) {
           items-center
           justify-center
           border
-          bg-primary hover:bg-primary-dark text-white transition-colors rounded-md py-3 ${className}`}
+          oauth-button
+          rounded-md
+          py-3
+          ${className}
+        `}
         onClick={() => {
           window.location.href = url;
         }}
@@ -26,7 +30,7 @@ export default function OAuthButtons({ className }: { className?: string }) {
           <FcGoogle size={28} />
         </div>
 
-        <span className='font-medium text-white'>Continuar com Google</span>
+        <span className='font-medium'>Continuar com Google</span>
       </button>
     </div>
   );

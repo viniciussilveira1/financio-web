@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import PasswordInput from "@components/ui/PasswordInput";
 import type { FormValues } from "interfaces/Auth";
 import LoginButton from "@components/ui/LoginButton";
+import InfoToolTip from "@components/ui/InfoTooltip";
 
 export default function LoginForm() {
   const {
@@ -40,8 +41,8 @@ export default function LoginForm() {
         onSubmit={handleSubmit(onSubmit)}
         className='w-full max-w-md space-y-4'
       >
-        <h2 className='text-2xl font-bold text-center text-app'>
-          Bem-vindo de volta ao Financio!
+        <h2 className='text-2xl font-bold text-center'>
+          Bem-vindo de volta ao <span className='text-primary'>Financio!</span>
         </h2>
         <p className='text-sm text-secondary-500 text-center'>
           Controle suas finanças de forma simples. Cadastre carteiras e registre
@@ -71,7 +72,14 @@ export default function LoginForm() {
               className='accent-primary cursor-pointer'
               {...register("rememberMe")}
             />
-            Lembrar meu dados
+            <span>
+              Lembrar meu dados{" "}
+              <InfoToolTip
+                size={16}
+                position='bottom'
+                message='Ao marcar essa opção, seu login ficará ativo neste dispositivo usando um token seguro.'
+              />
+            </span>
           </label>
           <CustomLink href='/forget-password'> Esqueceu sua senha?</CustomLink>
         </div>

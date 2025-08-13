@@ -38,7 +38,7 @@ export default function WalletBalanceChart({
   }
 
   return (
-    <section className='md:col-span-2 bg-white rounded-2xl shadow-md border border-gray-200 p-6'>
+    <section className='col-span-full lg:col-span-2 bg-white rounded-2xl shadow-md border border-gray-200 p-4 sm:p-6'>
       <h2 className='text-lg font-semibold text-green-600 mb-3'>
         Saldo da Carteira
       </h2>

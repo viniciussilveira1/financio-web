@@ -22,7 +22,7 @@ export default function DropDown({
     );
 
   return (
-    <div className='mb-4'>
+    <div className='mb-4 w-full sm:w-auto'>
       <label
         htmlFor='wallet-select'
         className='block mb-2 text-sm font-medium text-app'

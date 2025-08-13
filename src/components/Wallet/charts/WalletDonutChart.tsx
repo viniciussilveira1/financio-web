@@ -5,6 +5,7 @@ import {
   MovementCategory,
   MovementCategoryFriendly,
 } from "@interfaces/Movements";
+import { EmptyState } from "@components/ui/EmptyState";
 
 interface Movement {
   category: string;
@@ -55,13 +56,21 @@ export default function WalletDonutChart({
     }));
   }, [movements, isLoading]);
 
+  if (movements.length == 0) {
+    return (
+      <section className='bg-white rounded-2xl shadow-md border border-gray-200 p-6 flex flex-col justify-center'>
+        <EmptyState message='Nenhum movimento encontrado' />
+      </section>
+    );
+  }
+
   return (
     <section className='bg-white rounded-2xl shadow-md border border-gray-200 p-6 flex flex-col justify-center'>
       <h2 className='text-lg font-semibold text-green-600 mb-3 text-center'>
         Minha Carteira
       </h2>
       <div className='p-6'>
-        <p className='text-center text-primary text-2xl font-bold mb-4'>
+        <p className='text-center text-2xl font-bold mb-4'>
           {movements.length} Ativos
         </p>
 

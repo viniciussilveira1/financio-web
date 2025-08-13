@@ -1,6 +1,14 @@
 @import "tailwindcss";
 
+/* =========================
+   Variáveis de Tema - Padrão (Verde)
+   ========================= */
 :root {
+  --color-primary: #22c55e;
+  --color-primary-light: #4ade80;
+  --color-primary-dark: #16a34a;
+  --color-text-primary-dark: #181717;
+
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
@@ -15,19 +23,62 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* =========================
+   Tema Azul (exemplo futuro)
+   ========================= */
+[data-theme="blue"] {
+  --color-primary: #3b82f6;
+  --color-primary-light: #93c5fd;
+  --color-primary-dark: #1d4ed8;
+  --color-text-primary-dark: #1e3a8a;
+}
+
+/* =========================
+   Estilos globais
+   ========================= */
+
+/* Sidebar padrão preta */
+.sidebar {
+  background-color: #000000;
+  color: #cccccc; /* texto claro */
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* Item padrão */
+.sidebar-item {
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border-left: 4px solid transparent;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+/* Hover no item */
+.sidebar-item:hover {
+  background-color: rgba(34, 197, 94, 0.1); /* verde claro com opacidade */
+  color: var(--color-primary);
+}
+
+/* Item ativo selecionado */
+.sidebar-item.active {
+  background-color: var(--color-primary);
+  color: #fff;
+  border-left-color: var(--color-primary-dark);
+}
+
 a {
   font-weight: 500;
-  color: #16a34a;
+  color: var(--color-primary);
   text-decoration: inherit;
 }
 a:hover {
-  color: #15803d;
+  color: var(--color-primary-dark);
 }
 
 body {
   margin: 0;
-  /* display: flex;
-  place-items: center; */
   min-width: 320px;
   min-height: 100vh;
   background-color: #f8fafc;
@@ -47,64 +98,96 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #22c55e;
+  background-color: var(--color-primary);
   color: white;
   cursor: pointer;
   transition: all 0.25s;
 }
 button:hover {
-  background-color: #16a34a;
-  border-color: #15803d;
+  background-color: var(--color-primary-dark);
+  border-color: var(--color-primary-dark);
 }
 button:focus,
 button:focus-visible {
-  outline: 2px solid #22c55e;
+  outline: 2px solid var(--color-primary);
   outline-offset: 2px;
 }
 
-/* Tema personalizado para componentes */
-.bg-primary {
-  background-color: #22c55e;
+.oauth-button {
+  background-color: white;
+  color: black;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 0.75em 1.2em;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease,
+    transform 0.3s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  position: relative;
 }
 
-.bg-secondary {
-  background-color: #06142236;
+.oauth-button:hover {
+  background-color: #f3f4f6;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* sombra mais suave e menor */
+  transform: translateY(-2px);
+  border-color: #999;
+}
+
+.recharts-wrapper svg *:focus {
+  outline: none !important;
+}
+
+.recharts-wrapper:focus,
+.recharts-surface:focus,
+.recharts-surface *:focus {
+  outline: none !important;
+}
+
+/* =========================
+   Utilitários baseados no tema
+   ========================= */
+.bg-primary {
+  background-color: var(--color-primary);
 }
 
 .bg-primary-light {
-  background-color: #4ade80;
+  background-color: var(--color-primary-light);
 }
 
 .bg-primary-dark {
-  background-color: #16a34a;
+  background-color: var(--color-primary-dark);
 }
 
 .text-primary {
-  color: #22c55e;
+  color: var(--color-primary);
 }
 
 .text-primary-dark {
-  color: #16a34a;
+  color: var(--color-text-primary-dark);
 }
 
 .border-primary {
-  border-color: #22c55e;
+  border-color: var(--color-primary);
 }
 
 .hover\:bg-primary:hover {
-  background-color: #16a34a;
+  background-color: var(--color-primary-dark);
 }
 
 .hover\:text-primary:hover {
-  color: #22c55e;
+  color: var(--color-primary);
 }
 
-/* Cards e containers */
+/* =========================
+   Layout e componentes
+   ========================= */
 .card {
   background-color: #ffffff;
   border: 1px solid #e2e8f0;
   border-radius: 12px;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
 }
 
 .sidebar {
@@ -116,14 +199,21 @@ button:focus-visible {
   background-color: #f8fafc;
 }
 
+/* =========================
+   Tema claro (opcional)
+   ========================= */
 @media (prefers-color-scheme: light) {
   :root {
-    color: #213547;
-    background-color: #ffffff;
+    --color-primary: #4caf50;
+    --color-primary-light: #81c784;
+    --color-primary-dark: #388e3c;
+    --color-text-primary-dark: #1b5e20;
   }
+
   a:hover {
-    color: #15803d;
+    color: var(--color-primary-dark);
   }
+
   button {
     background-color: #f9f9f9;
   }
